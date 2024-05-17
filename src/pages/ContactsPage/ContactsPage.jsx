@@ -1,11 +1,10 @@
-import ContactForm from "../ContactForm/ContactForm";
-import SearchBox from "../SearchBox/SearchBox";
-import ContactList from "../ContactList/ContactList";
-import { Layout } from "../Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchContacts } from "../../redux/contactsOps";
-import { selectError, selectIsLoading } from "../../redux/selectors";
+import { fetchContacts } from "../../redux/contacts/operations";
+import { selectError, selectIsLoading } from "../../redux/contacts/selectors";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import SearchBox from "../../components/SearchBox/SearchBox";
+import ContactList from "../../components/ContactList/ContactList";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -15,13 +14,14 @@ export default function App() {
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+
   return (
-    <Layout>
-      <h1>Phonebook</h1>
+    <>
+      <h1>Your contacts</h1>
       <ContactForm />
       <SearchBox />
       {isLoading && !error && <b>Request in progress...</b>}
       <ContactList />
-    </Layout>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./contactsOps"
+import { fetchContacts, addContact, deleteContact } from "./operations"
+import { logOut } from '../../redux/auth/operations';
 
 const handlePending = (state) => {
     state.isLoading = true;
@@ -40,6 +41,11 @@ const contactsSlice = createSlice({
                 state.items = state.items.filter(contact => contact.id !== action.payload.id);  // чому не працює const index = state.items.findIndex((item) => item.id === action.payload.id); state.items.splice(index, 1);
             })
             .addCase(deleteContact.rejected, handleRejected)
+            .addCase(logOut.fulfilled, state => {
+                state.items = [];
+                state.error = null;
+                state.isLoading = false;
+            });
     }
 })
 
